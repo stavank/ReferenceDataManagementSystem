@@ -1,16 +1,16 @@
 import os
 
+
 def create_newline(line):
-    return line + '\n'
+    return line + "\n"
+
 
 def get_file_header(file_path, delimiter):
-    with open(file_path, 'r') as file_reader:
+    with open(file_path, "r") as file_reader:
         file_header_line = file_reader.readline().rstrip()
-        file_header = file_header_line.split(delimiter)
+        file_header = file_header_line.split(str(delimiter))
         if file_header_line == "" or len(file_header) == 0:
-            # TO DO:
-            # Throw empty file exception
-            pass
+            raise ValueError("{file_path} is empty.".format(file_path=file_path))
 
     return file_header
 
