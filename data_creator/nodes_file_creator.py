@@ -11,11 +11,11 @@ from common.exceptions.file_exception import InputFileDataException
 from common.data_types import DataTypes
 
 
-class CreateNodeFile:
+class CreateNodeData:
     """
-    This class is responsible to create node file that can be processed by the neo4j-import tool to create nodes of
-    one particular type (label). This node file will store the properties of these nodes and will create a unique id
-    for each node.
+    This class is responsible to create node data that can be processed by the neo4j-import tool to create nodes of
+    one particular type (label). This node data will store the properties of these nodes and will create a temporary
+    unique id for each node.
     """
 
     __col_to_idx_dict = {}  # This is a dictionary of column names to their indices in source file.
