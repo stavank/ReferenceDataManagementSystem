@@ -1,4 +1,4 @@
-class CreateRelationFile:
+class CreateRelationsData:
     def __init__(self, file_path, relation_from, relation_to, relation_name, destination_file_path, delimiter):
         self.__relation_from = relation_from
         self.__relation_to = relation_to
