@@ -1,4 +1,5 @@
 import os
+import tempfile
 
 
 def create_newline(line):
@@ -21,3 +22,7 @@ def create_col_name_to_idx_dict(file_header):
 
 def get_file_name(file_path):
     return os.path.basename(file_path)
+
+
+def create_temp_file(suffix):
+    return tempfile.NamedTemporaryFile(suffix=suffix)

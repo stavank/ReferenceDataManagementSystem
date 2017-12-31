@@ -39,16 +39,17 @@ class CreateNodeFile:
 
         """
         # Parameter Validations.
-        data_type_validations.validate_param_type_for_string(self.__node_file_path, "file_path")
-        data_type_validations.validate_param_type_for_list(self.__primary_key_ids, "primary_key_columns")
-        data_type_validations.validate_param_type_for_string(self.__destination_file_path, "destination_file_path")
+        data_type_validations.valid_param_type_for_string(self.__node_file_path, "file_path")
+        data_type_validations.valid_param_type_for_list(self.__primary_key_ids, "primary_key_columns")
+        data_type_validations.valid_param_type_for_string(self.__destination_file_path, "destination_file_path")
+        file_validations.valid_file_path(self.__node_file_path)
+        file_validations.valid_csv_file_path(self.__destination_file_path)
 
         source_file_header = get_file_header(self.__node_file_path, self.__delimiter)
         number_of_columns = len(source_file_header)
         self.__col_to_idx_dict = create_col_name_to_idx_dict(source_file_header)
 
         # Parameter validations - Business logic.
-        file_validations.validate_csv_file_path(self.__destination_file_path)
         if self.__node_value_col not in source_file_header:
             raise ValueError(("The column provided for 'node_value_col': '{node_value_col}', is not present in the "
                               "given file: '{file_name}'.").format(node_value_col=self.__node_value_col,
@@ -59,15 +60,16 @@ class CreateNodeFile:
                               "'{file_name}'.").format(missing_cols=utils.difference_in_lists(self.__primary_key_ids,
                                                                                               source_file_header),
                                                        file_name=self.__node_file_path))
-        if len(data_type_preference) != number_of_columns:
-            raise ValueError("Number of data type preferences does not match the number of header columns.")
-        if any(not isinstance(preference, DataTypes) for preference in data_type_preference):
-            raise ValueError(("'data_type_preference' has data types that are not recognized. Please check the enum "
-                              "'DataTypes' for available data types."))
+        if data_type_preference:
+            if len(data_type_preference) != number_of_columns:
+                raise ValueError("Number of data type preferences does not match the number of header columns.")
+            if any(not isinstance(preference, DataTypes) for preference in data_type_preference):
+                raise ValueError(("'data_type_preference' has data types that are not recognized. Please check the "
+                                  "enum 'DataTypes' for available data types."))
 
         # Create new node file compatible with neo4j-import tool
         node_id_set = set()
-        temp_file = self.__destination_file_path + datetime.now().strftime('%Y%m%d_%H%M%S')
+        temp_file = self.__destination_file_path + datetime.now().strftime('%Y%m%d_%H%M%S') + ".tmp"
         try:
             with open(temp_file, "w") as fw:
                 file_writer = csv.writer(fw) 
