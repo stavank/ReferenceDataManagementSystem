@@ -6,9 +6,9 @@ component.
 
 Tasks to do:
 1. Create new node file.
-   i. Write test cases.
+    * Write test cases.
 2. Create new relation file (should support data with time component and without time component).
-   i. Write test cases.
+    * Write test cases.
 3. Create conda setup for this software (manage dependencies).
 4. Create module to interact with terminal.
 5. Create api to allow simple reads of data from database.
