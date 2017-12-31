@@ -20,13 +20,12 @@ class CreateNodeFile:
 
     __col_to_idx_dict = {}  # This is a dictionary of column names to their indices in source file.
 
-    def __init__(self, file_path, delimiter, primary_key_ids, destination_file_path, node_label, node_value_col):
+    def __init__(self, file_path, delimiter, primary_key_ids, destination_file_path, node_label):
         self.__node_file_path = file_path
         self.__delimiter = delimiter
         self.__node_label = node_label
         self.__primary_key_ids = primary_key_ids
         self.__destination_file_path = destination_file_path
-        self.__node_value_col = node_value_col
 
     def create(self, data_type_preference=None):
         """
@@ -50,10 +49,6 @@ class CreateNodeFile:
         self.__col_to_idx_dict = create_col_name_to_idx_dict(source_file_header)
 
         # Parameter validations - Business logic.
-        if self.__node_value_col not in source_file_header:
-            raise ValueError(("The column provided for 'node_value_col': '{node_value_col}', is not present in the "
-                              "given file: '{file_name}'.").format(node_value_col=self.__node_value_col,
-                                                                   file_name=self.__node_file_path))
         if (len(self.__primary_key_ids) > number_of_columns) or \
                 (len(utils.difference_in_lists(self.__primary_key_ids, source_file_header)) > 0):
             raise ValueError(("Column(s): {missing_cols}, in the parameter 'primary_key_ids' do not exist in file:"
