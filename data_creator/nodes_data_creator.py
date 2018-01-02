@@ -16,6 +16,7 @@ class CreateNodeData:
     This class is responsible to create node data that can be processed by the neo4j-import tool to create nodes of
     one particular type (label). This node data will store the properties of these nodes and will create a temporary
     unique id for each node.
+
     """
 
     __col_to_idx_dict = {}  # This is a dictionary of column names to their indices in source file.
@@ -35,7 +36,6 @@ class CreateNodeData:
 
         :param data_type_preference: This is the list of all the preferred data_types for the columns in the source
                                      file.
-
         """
         # Parameter Validations.
         data_type_validations.valid_param_type_for_string(self.__node_file_path, "file_path")
@@ -43,6 +43,8 @@ class CreateNodeData:
         data_type_validations.valid_param_type_for_string(self.__destination_file_path, "destination_file_path")
         file_validations.valid_file_path(self.__node_file_path)
         file_validations.valid_csv_file_path(self.__destination_file_path)
+        if data_type_preference:
+            data_type_validations.valid_param_type_for_dict(data_type_preference, "data_type_preference")
 
         source_file_header = get_file_header(self.__node_file_path, self.__delimiter)
         number_of_columns = len(source_file_header)
@@ -58,7 +60,7 @@ class CreateNodeData:
         if data_type_preference:
             if len(data_type_preference) != number_of_columns:
                 raise ValueError("Number of data type preferences does not match the number of header columns.")
-            if any(not isinstance(preference, DataTypes) for preference in data_type_preference):
+            if any(not isinstance(preference, DataTypes) for col, preference in data_type_preference.items()):
                 raise ValueError(("'data_type_preference' has data types that are not recognized. Please check the "
                                   "enum 'DataTypes' for available data types."))
 
@@ -115,7 +117,6 @@ class CreateNodeData:
         """
         node_file_header = []
         if data_type_preference:
-            node_file_header = [source_file_header[x] + ":" + data_type_preference[x].value
-                                for x in range(0, len(data_type_preference))]
+            node_file_header = [header + ":" + data_type_preference[header].value for header in source_file_header]
         node_file_header.insert(0, ":ID")
         return node_file_header
