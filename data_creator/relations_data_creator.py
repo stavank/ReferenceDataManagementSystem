@@ -5,7 +5,8 @@ class CreateRelationsData:
     properties of these relations.
 
     """
-    def __init__(self, file_path, delimiter, destination_file_path, relation_from, relation_to, relation_name):
+    def __init__(self, file_path, delimiter, destination_file_path, relation_from, relation_to, relation_name,
+                 is_bitemporal):
         self.__relation_file_path = file_path
         self.__delimiter = delimiter
         self.__destination_file_path = destination_file_path
@@ -28,7 +29,9 @@ class CreateRelationsData:
                                              primary key of the node at which the relationship ends.
                                              Example:
                                              {'Col_D': 4, 'Col_B': 5, 'Col_C': 6}
-        :param data_type_preference: This is the list of all the preferred data_types for the columns in the source
-                                     file.
+        :param data_type_preference: This is the dictionary of all the preferred data_types for the columns in the
+                                     source file.
+                                     Example:
+                                     {'Col_A': 1, 'Col_B': 2, 'Col_C': 3}
         """
         pass

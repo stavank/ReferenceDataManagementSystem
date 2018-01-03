@@ -1,6 +1,6 @@
 from nose.tools import *
 from data_creator.nodes_data_creator import CreateNodeData
-from common.data_types import DataTypes
+from common.internal_structures import DataTypes
 from common.utils.files.file_util import create_temp_file
 
 

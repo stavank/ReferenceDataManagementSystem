@@ -8,7 +8,7 @@ from datetime import datetime
 from common.exceptions.primary_key_exception import PrimaryKeyCollisionException
 from common.utils.files.file_util import get_file_header, create_col_name_to_idx_dict
 from common.exceptions.file_exception import InputFileDataException
-from common.data_types import DataTypes
+from common.internal_structures import DataTypes
 
 
 class CreateNodeData:
@@ -34,8 +34,10 @@ class CreateNodeData:
         tool to create nodes of a particular label/type. It also creates UUID for each node using the columns
         chosen in '__primary_key_ids'.
 
-        :param data_type_preference: This is the list of all the preferred data_types for the columns in the source
-                                     file.
+        :param data_type_preference: This is the dictionary of all the preferred data_types for the columns in the
+                                     source file.
+                                     Example:
+                                     {'Col_A': 1, 'Col_B': 2, 'Col_C': 3}
         """
         # Parameter Validations.
         data_type_validations.valid_param_type_for_string(self.__node_file_path, "file_path")
@@ -111,8 +113,10 @@ class CreateNodeData:
         This method creates the new header for the file to be used for importing nodes.
 
         :param source_file_header: The header column names retrieved from the source file.
-        :param data_type_preference: This is the list of all the preferred data_types for the columns in the source
-                                     file
+        :param data_type_preference: This is the dictionary of all the preferred data_types for the columns in the
+                                     source file.
+                                     Example:
+                                     {'Col_A': 1, 'Col_B': 2, 'Col_C': 3}
         :return: The header for the new node file.
         """
         node_file_header = []
