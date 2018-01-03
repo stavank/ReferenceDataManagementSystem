@@ -14,3 +14,9 @@ Tasks to do:
 5. Create api to allow simple reads of data from database.
 6. Create api to allow create and update operations.
 7. Create api to integrate bi-temporal queries in reads.
+
+
+
+Tools Used:
+1. neo4j as database.
+2. nose for tests.
