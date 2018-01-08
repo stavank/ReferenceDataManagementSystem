@@ -60,3 +60,36 @@ def test_valid_param_type_for_dict_when_param_is_string():
 @raises(ValueError)
 def test_valid_param_type_for_dict_when_param_is_list():
     valid_param_type_for_dict(list(), "param_name")
+
+
+# Test valid param type for TimeComponent
+def test_valid_param_type_for_time_component_when_param_is_bitemporal():
+    valid_param_type_for_time_component(TimeComponent.BITEMPORAL, "param_name")
+
+
+def test_valid_param_type_for_time_component_when_param_is_timeseries():
+    valid_param_type_for_time_component(TimeComponent.TIMESERIES, "param_name")
+
+
+def test_valid_param_type_for_time_component_when_param_is_static():
+    valid_param_type_for_time_component(TimeComponent.STATIC, "param_name")
+
+
+@raises(ValueError)
+def test_valid_param_type_for_time_component_when_param_is_list():
+    valid_param_type_for_time_component(list(), "param_name")
+
+
+@raises(ValueError)
+def test_valid_param_type_for_time_component_when_param_is_string():
+    valid_param_type_for_time_component("", "param_name")
+
+
+@raises(ValueError)
+def test_valid_param_type_for_time_component_when_param_is_dict():
+    valid_param_type_for_time_component(dict(), "param_name")
+
+
+@raises(ValueError)
+def test_valid_param_type_for_time_component_when_param_is_number():
+    valid_param_type_for_time_component(7, "param_name")

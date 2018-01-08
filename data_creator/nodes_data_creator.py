@@ -20,6 +20,7 @@ class CreateNodeData:
     """
 
     __col_to_idx_dict = {}  # This is a dictionary of column names to their indices in source file.
+    __data_created = False
 
     def __init__(self, file_path, delimiter, primary_key_ids, destination_file_path, node_label):
         self.__node_file_path = file_path
@@ -27,6 +28,12 @@ class CreateNodeData:
         self.__node_label = node_label
         self.__primary_key_ids = primary_key_ids
         self.__destination_file_path = destination_file_path
+
+    def __str__(self):
+        return str(self.__node_label)
+
+    def __eq__(self, other):
+        return self.__node_label == other.__nodel_label
 
     def create(self, data_type_preference=None):
         """
@@ -92,10 +99,11 @@ class CreateNodeData:
                         row.insert(0, node_id)
                         file_writer.writerow(row)
             os.rename(temp_file, self.__destination_file_path)
+            self.__data_created = True
         except (PrimaryKeyCollisionException, InputFileDataException):
             os.remove(temp_file)
             raise
-    
+
     def __create_node_id(self, arr):
         """
         This method creates a unique node id across the global name space using the __primary_key_ids and __node_label.
